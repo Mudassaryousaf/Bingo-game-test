@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bingo Game</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <h1>Welcome, {{ name }}! Here is your Bingo card</h1>
+    
+    <div class="bingo-card">
+        <form method="POST" action="{{ url_for('mark') }}">
+            <table>
+                {% for number in card %}
+                <tr>
+                    <td>
+                        <input type="checkbox" name="marked_numbers" value="{{ number }}" 
+                        {% if number in marked_numbers %} checked {% endif %}>
+                        <label>{{ number }}</label>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+            <input type="submit" value="Mark">
+        </form>
+    </div>
+    
+    <h2>Numbers Called</h2>
+    <ul>
+        {% for number in numbers %}
+        <li>{{ number }}</li>
+        {% endfor %}
+    </ul>
+
+    <h2>Total Players: {{ total_players }}</h2>
+
+    {% if is_winner %}
+    <h2>Congratulations, you are the winner!</h2>
+    {% elif winner %}
+    <h2>{{ winner }} has won the game!</h2>
+    {% endif %}
+
+</body>
+</html>

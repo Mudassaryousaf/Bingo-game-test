@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <script>
+        function toggleLogin() {
+            const loginType = document.getElementById('loginType').value;
+            const playerForm = document.getElementById('playerForm');
+            const adminForm = document.getElementById('adminForm');
+
+            if (loginType === 'admin') {
+                playerForm.style.display = 'none';
+                adminForm.style.display = 'block';
+            } else {
+                playerForm.style.display = 'block';
+                adminForm.style.display = 'none';
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Bingo Game Login</h1>
+    <select id="loginType" onchange="toggleLogin()">
+        <option value="player">Player Login</option>
+        <option value="admin">Admin Login</option>
+    </select>
+
+    <!-- Player Login Form -->
+    <form id="playerForm" method="POST" action="/">
+        <h2>Player Login</h2>
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+
+        <input type="submit" value="Login as Player">
+    </form>
+
+    <!-- Admin Login Form -->
+    <form id="adminForm" method="POST" action="/" style="display: none;">
+        <h2>Admin Login</h2>
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+
+        <input type="submit" value="Login as Admin">
+    </form>
+</body>
+</html>

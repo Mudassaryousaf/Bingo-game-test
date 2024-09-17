@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <h1>Admin Dashboard</h1>
+    
+    <h3>Total Players: {{ total_players }}</h3>
+    <h3>Winner: {% if winner %} {{ winner }} {% else %} None {% endif %}</h3>
+
+    <h2>Numbers Called</h2>
+    <ul>
+        {% for number in called_numbers %}
+            <li>{{ number }}</li>
+        {% endfor %}
+    </ul>
+
+    <form method="POST">
+        <input type="number" name="number" placeholder="Call Number" min="1" max="30" required {% if winner %} disabled {% endif %}>
+        <input type="submit" value="Call Number" {% if winner %} disabled {% endif %}>
+    </form>
+
+    <form method="POST">
+        <input type="hidden" name="newgame" value="true">
+        <input type="submit" value="Start New Game">
+    </form>
+</body>
+</html>
