@@ -9,8 +9,14 @@
 <body>
     <h1>Welcome, {{ name }}! Here is your Bingo card</h1>
     
-    <div class="bingo-card">
-        <form method="POST" action="{{ url_for('mark') }}">
+    <form method="POST" action="{{ url_for('mark') }}">
+        <label for="color">Choose your card color:</label>
+        <select id="color" name="color" onchange="changeColor(this.value)">
+            <option value="blue">Blue</option>
+            <option value="green">Green</option>
+        </select>
+
+        <div class="bingo-card" id="bingoCard" style="background-color: lightblue;">
             <table>
                 {% for number in card %}
                 <tr>
@@ -23,9 +29,9 @@
                 {% endfor %}
             </table>
             <input type="submit" value="Mark">
-        </form>
-    </div>
-    
+        </div>
+    </form>
+
     <h2>Numbers Called</h2>
     <ul>
         {% for number in numbers %}
@@ -40,6 +46,12 @@
     {% elif winner %}
     <h2>{{ winner }} has won the game!</h2>
     {% endif %}
+
+    <script>
+        function changeColor(color) {
+            document.getElementById('bingoCard').style.backgroundColor = color;
+        }
+    </script>
 
 </body>
 </html>
