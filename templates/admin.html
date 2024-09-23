@@ -10,23 +10,26 @@
     <h1>Admin Dashboard</h1>
     
     <h3>Total Players: {{ total_players }}</h3>
-    <h3>Winner: {% if winner %} {{ winner }} {% else %} None {% endif %}</h3>
 
-    <h2>Numbers Called</h2>
+    <h2>Called Numbers</h2>
     <ul>
         {% for number in called_numbers %}
-            <li>{{ number }}</li>
+        <li>{{ number }}</li>
         {% endfor %}
     </ul>
 
-    <form method="POST">
-        <input type="number" name="number" placeholder="Call Number" min="1" max="30" required {% if winner %} disabled {% endif %}>
-        <input type="submit" value="Call Number" {% if winner %} disabled {% endif %}>
+    <form method="POST" action="{{ url_for('admin') }}">
+        <label for="number">Call Number:</label>
+        <input type="number" id="number" name="number" min="1" max="30" required>
+        <input type="submit" value="Call Number">
     </form>
 
-    <form method="POST">
-        <input type="hidden" name="newgame" value="true">
-        <input type="submit" value="Start New Game">
+    <form method="POST" action="{{ url_for('admin') }}">
+        <input type="submit" name="newgame" value="Start New Game">
     </form>
+
+    {% if winner %}
+    <h2>{{ winner }} has won the game!</h2>
+    {% endif %}
 </body>
 </html>
