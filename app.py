@@ -1,6 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 import random
-from urllib.parse import quote_plus as url_quote
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
@@ -70,10 +69,14 @@ def bingo():
         # Check for a winner
         if is_winner and winner is None:
             winner = session['name']
-        
+            return render_template('bingo.html', name=session['name'], card=card, numbers=called_numbers,
+                                   marked_numbers=marked_numbers, is_winner=is_winner,
+                                   total_players=len(players), winner=winner, game_over=True)
+
         return render_template('bingo.html', name=session['name'], card=card, numbers=called_numbers,
-                               marked_numbers=marked_numbers, is_winner=is_winner, 
-                               total_players=len(players), winner=winner)
+                               marked_numbers=marked_numbers, is_winner=is_winner,
+                               total_players=len(players), winner=winner, game_over=False)
+
     return redirect(url_for('login'))
 
 @app.route('/mark', methods=['POST'])
@@ -82,11 +85,19 @@ def mark():
     if 'name' in session and winner is None:
         email = session['email']
         marked_numbers = request.form.getlist('marked_numbers')
-        players[email]['marked_numbers'] = [int(num) for num in marked_numbers if num.isdigit()]
+
+        # Filter out valid marked numbers
+        valid_marked_numbers = [int(num) for num in marked_numbers if num.isdigit() and int(num) in called_numbers]
+
+        if len(valid_marked_numbers) != len(marked_numbers):
+            return "Error: You can only mark numbers that have been called. Please try again."
+
+        players[email]['marked_numbers'] = valid_marked_numbers
 
         # Check if the player is a winner
         if check_winner(players[email]['marked_numbers']):
             winner = session['name']
+            return redirect(url_for('bingo'))
 
     return redirect(url_for('bingo'))
 
@@ -111,7 +122,6 @@ def admin():
             return redirect(url_for('admin'))
 
     return render_template('admin.html', called_numbers=called_numbers, 
-                           available_numbers=set(bingo_numbers) - set(called_numbers),
                            total_players=len(players), winner=winner)
 
 if __name__ == '__main__':
