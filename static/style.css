@@ -1,37 +1,30 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
+    background-color: #f2f2f2;
     margin: 0;
-    padding: 0;
-    text-align: center;
+    padding: 20px;
 }
 
-.login-container {
-    margin-top: 100px;
-}
-
-input[type="text"], input[type="email"], input[type="number"], select {
-    padding: 10px;
-    margin: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-input[type="submit"] {
-    padding: 10px 20px;
-    background-color: #28a745;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+h1, h2, h3 {
+    color: #333;
 }
 
 .bingo-card {
     margin: 20px auto;
     border-collapse: collapse;
+    width: 300px; /* Adjust the width as needed */
+    text-align: center;
+    padding: 10px;
+    border: 2px solid #ccc;
 }
 
 .bingo-card td {
     padding: 15px;
     border: 1px solid #ccc;
+    text-align: center;
+}
+
+/* Additional styles for winning announcement */
+h2 {
+    color: #ff5733; /* Change to your preference */
 }
