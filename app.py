@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 import random
+from urllib.parse import quote_plus as url_quote
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
